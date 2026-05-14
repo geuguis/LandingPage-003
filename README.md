@@ -1,4 +1,4 @@
-# ♠️♦️❤️♣️ Landing Page José Luis - Balatro Edition ♠️♦️❤️♣️
+## ♠️♦️❤️♣️ Landing Page José Luis - Balatro Edition ♠️♦️❤️♣️
 
 Landing page temática diseñada para un desarrollador **Backend**, inspirada al 100% en la estética del juego **Balatro**. Mezcla el estilo visual de las "Joker Cards" con un stack técnico de Java y Spring Boot.
 
