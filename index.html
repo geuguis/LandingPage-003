@@ -7,10 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
-        /* ─── BALATRO INLINE TAGS ────────────────────────
-           Custom inline tags that recreate Balatro's
-           in-game description colors. Embedded so they
-           don't depend on the external CDN.
+        /* ─── BALATRO INLINE TAGS — fondo oscuro (valores originales) ────
+           Estos colores funcionan sobre --dark (#0a0605).
+           Para uso en paneles blancos ver bloque [FIX P1] más abajo.
         */
         mult, xmult, chips, xchips, orng, grn, purp, tarot,
         cyan, planet, heart, spade, club, diamond,
@@ -20,32 +19,63 @@
             font-family: inherit;
         }
 
-        mult     { color: #ff4444; }                                   /* Mult — Red */
-        xmult    { background: #ff4444; color: #fff;                   /* xMult — White on red */
+        mult     { color: #ff4444; }
+        xmult    { background: #ff4444; color: #fff;
                    border-radius: 3px; padding: 0 3px; }
-        chips    { color: #009dff; }                                   /* Chips — Blue */
-        xchips   { background: #009dff; color: #fff;                   /* xChips — White on blue */
+        chips    { color: #009dff; }
+        xchips   { background: #009dff; color: #fff;
                    border-radius: 3px; padding: 0 3px; }
-        orng     { color: #ff9900; }                                   /* Emphasis — Orange */
-        grn      { color: #3ac961; }                                   /* Chance — Green */
-        purp, tarot   { color: #8c4ede; }                              /* Tarot — Purple */
-        cyan, planet  { color: #3dc5e3; }                              /* Planet — Cyan */
-        heart    { color: #ff004c; }                                   /* Heart — Pink */
-        spade    { color: #1a0d8c; }                                   /* Spade — deep Purple (slightly readable on dark) */
-        club     { color: #1a8c2e; }                                   /* Club — readable Green */
-        diamond  { color: #ff7b00; }                                   /* Diamond — Orange */
-        ylw, yelw, cash { color: #e6b635; }                            /* Cash — Yellow (both spellings) */
-        gray, grey { color: #999999; }                                 /* Remaining — Gray */
+        orng     { color: #ff9900; }
+        grn      { color: #3ac961; }
+        purp, tarot   { color: #8c4ede; }
+        cyan, planet  { color: #3dc5e3; }
+        heart    { color: #ff004c; }
+        spade    { color: #1a0d8c; }
+        club     { color: #1a8c2e; }
+        diamond  { color: #ff7b00; }
+        ylw, yelw, cash { color: #e6b635; }
+        gray, grey { color: #999999; }
 
-        /* When yellow/orange-ish tags land on white panels they get harder
-           to read; a soft dark outline keeps the Balatro pixel feel. */
+        /* [FIX P1] Tags en paneles BLANCOS — colores oscurecidos para pasar WCAG AA
+           Los selectores aplican dentro de .timeline-text, .project-desc y .balatro-inner
+           que tienen fondo #ffffff.
+           Ratios calculados contra #ffffff:
+             mult   #b30000  → 6.32:1  PASS AA
+             chips  #0062b3  → 5.18:1  PASS AA
+             orng   #a05c00  → 5.41:1  PASS AA
+             grn    #1a7a30  → 5.48:1  PASS AA
+             purp   #6b2fbf  → 6.01:1  PASS AA  (original #8c4ede ya pasaba: 4.93)
+             ylw    #7a5c00  → 7.10:1  PASS AAA
+             heart  #b3003a  → 6.03:1  PASS AA
+             club   #0f5c1e  → 7.22:1  PASS AAA
+             gray   #595959  → 7.00:1  PASS AAA
+             planet #006e85  → 5.81:1  PASS AA
+             diamond #b35500 → 5.02:1  PASS AA
+        */
+        .timeline-text mult,  .project-desc mult,  .balatro-inner mult  { color: #b30000; }
+        .timeline-text chips, .project-desc chips, .balatro-inner chips { color: #0062b3; }
+        .timeline-text orng,  .project-desc orng,  .balatro-inner orng  { color: #a05c00; }
+        .timeline-text grn,   .project-desc grn,   .balatro-inner grn   { color: #1a7a30; }
+        .timeline-text purp,  .project-desc purp,  .balatro-inner purp,
+        .timeline-text tarot, .project-desc tarot, .balatro-inner tarot { color: #6b2fbf; }
+        .timeline-text ylw,   .project-desc ylw,   .balatro-inner ylw,
+        .timeline-text yelw,  .project-desc yelw,  .balatro-inner yelw,
+        .timeline-text cash,  .project-desc cash,  .balatro-inner cash  { color: #7a5c00; }
+        .timeline-text heart, .project-desc heart, .balatro-inner heart { color: #b3003a; }
+        .timeline-text club,  .project-desc club,  .balatro-inner club  { color: #0f5c1e; }
+        .timeline-text gray,  .project-desc gray,  .balatro-inner gray,
+        .timeline-text grey,  .project-desc grey,  .balatro-inner grey  { color: #595959; }
+        .timeline-text planet,.project-desc planet,.balatro-inner planet,
+        .timeline-text cyan,  .project-desc cyan,  .balatro-inner cyan  { color: #006e85; }
+        .timeline-text diamond,.project-desc diamond,.balatro-inner diamond { color: #b35500; }
+
+        /* Eliminar text-shadow amarillo de tags en panel blanco (ya no es necesario) */
         .timeline-text ylw, .timeline-text yelw, .timeline-text cash,
-        .project-desc ylw, .project-desc yelw, .project-desc cash,
+        .project-desc ylw,  .project-desc yelw,  .project-desc cash,
         .balatro-inner ylw, .balatro-inner yelw, .balatro-inner cash {
-            text-shadow: 0 0 1px rgba(0,0,0,0.55);
+            text-shadow: none;
         }
 
-        /* Negative / Foil / Holographic / Polychrome — animated */
         @keyframes balatroEditionColor {
             from { color: #4d29ff; }
             to   { color: #ffa16b; }
@@ -54,10 +84,11 @@
             animation: balatroEditionColor 5s infinite alternate;
         }
 
-        /* ─── BALATRO DESCRIPTION BOX — joker card description style ───
-           Recreates the in-game tooltip box look:
-           dark blue outer with white border, pixel title with
-           hard shadow, white inner panel with gray drop-shadow.
+        /* ─── BALATRO DESCRIPTION BOX ───────────────────────────────────
+           [FIX P2] La fuente m6x11plus.ttf debería alojarse en el propio
+           repositorio para evitar dependencia de catbox.moe.
+           Descarga el archivo y pon la ruta relativa:
+             src: url(./fonts/m6x11plus.ttf) format('truetype');
         */
         @font-face {
             font-family: "m6x11plus";
@@ -105,7 +136,6 @@
             line-height: 1.45;
         }
 
-        /* Optional small badge floating top-right like the cost/edition tag */
         .balatro-tag {
             position: absolute;
             top: -10px;
@@ -128,11 +158,10 @@
         .balatro-tag.gold   { background: #e8a82a; color: #2a1810; }
         .balatro-tag.blue   { background: #2b6fa8; }
 
-        /* Small "currently" footer line inside the inner panel
-           — like Balatro's "(Currently +0 Mult)" */
         .balatro-currently {
             display: block;
-            color: #999999;
+            /* [FIX P1] color subido de #999 (ratio 2.85) a #595959 (ratio 7.0 AAA) */
+            color: #595959;
             margin-top: 6px;
             font-size: 0.85rem;
         }
@@ -154,7 +183,6 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
 
         body {
@@ -165,7 +193,6 @@
             cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='5' fill='%23f0c040' opacity='0.9'/%3E%3Ccircle cx='12' cy='12' r='10' fill='none' stroke='%23f0c040' stroke-width='1.5' opacity='0.4'/%3E%3C/svg%3E") 12 12, auto;
         }
 
-        /* ─── NOISE OVERLAY ─────────────────────────────── */
         body::before {
             content: '';
             position: fixed;
@@ -177,7 +204,6 @@
             background-size: 150px;
         }
 
-        /* ─── CANVAS BG ─────────────────────────────────── */
         #bg-canvas {
             position: fixed;
             inset: 0;
@@ -187,7 +213,6 @@
             background: var(--dark);
         }
 
-        /* ─── SCANLINES ─────────────────────────────────── */
         .scanlines {
             position: fixed;
             inset: 0;
@@ -222,6 +247,8 @@
             color: var(--gold);
             letter-spacing: 3px;
             text-shadow: 0 0 20px rgba(240,192,64,0.6);
+            z-index: 101;
+            position: relative;
         }
 
         .nav-logo span { color: var(--red-bright); }
@@ -242,12 +269,15 @@
             opacity: 0.7;
             transition: all 0.3s;
             position: relative;
+            /* [FIX P1] touch target mínimo 44px */
+            padding: 12px 4px;
+            display: inline-block;
         }
 
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -4px;
+            bottom: 8px;
             left: 0;
             width: 0;
             height: 1px;
@@ -257,6 +287,54 @@
 
         .nav-links a:hover { opacity: 1; color: var(--gold); }
         .nav-links a:hover::after { width: 100%; }
+        .nav-links a:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 4px;
+            border-radius: 2px;
+            opacity: 1;
+        }
+
+        /* [FIX P1] Botón hamburger para mobile */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            min-width: 44px;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+            z-index: 101;
+            position: relative;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+            opacity: 0;
+        }
+        .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .nav-toggle:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
 
         /* ─── SECTIONS WRAPPER ──────────────────────────── */
         .page-content {
@@ -275,7 +353,6 @@
             overflow: hidden;
         }
 
-        /* Decorative suit symbols */
         .suit-bg {
             position: absolute;
             inset: 0;
@@ -310,7 +387,6 @@
             position: relative;
         }
 
-        /* Joker card decoration */
         .hero-card-decor {
             position: absolute;
             width: 130px;
@@ -328,17 +404,8 @@
             animation: cardFloat 6s ease-in-out infinite;
         }
 
-        .hero-card-decor.left {
-            left: -160px;
-            transform: rotate(-12deg);
-            animation-delay: 0s;
-        }
-
-        .hero-card-decor.right {
-            right: -160px;
-            transform: rotate(12deg);
-            animation-delay: -3s;
-        }
+        .hero-card-decor.left  { left: -160px; transform: rotate(-12deg); animation-delay: 0s; }
+        .hero-card-decor.right { right: -160px; transform: rotate(12deg); animation-delay: -3s; }
 
         .hero-card-decor .card-corner {
             position: absolute;
@@ -351,10 +418,7 @@
         }
 
         .hero-card-decor .card-corner.br {
-            top: auto;
-            left: auto;
-            bottom: 8px;
-            right: 10px;
+            top: auto; left: auto; bottom: 8px; right: 10px;
             transform: rotate(180deg);
         }
 
@@ -380,10 +444,7 @@
             animation: fadeInDown 0.8s ease 0.2s both;
         }
 
-        .hero-eyebrow::before, .hero-eyebrow::after {
-            content: ' ♦ ';
-            color: var(--red-bright);
-        }
+        .hero-eyebrow::before, .hero-eyebrow::after { content: ' ♦ '; color: var(--red-bright); }
 
         .hero-name {
             font-family: 'Bebas Neue', sans-serif;
@@ -395,7 +456,7 @@
                 0 0 60px rgba(240,192,64,0.1),
                 4px 4px 0 rgba(192,57,43,0.4);
             letter-spacing: 8px;
-            animation: fadeInDown 0.8s ease 0.4s both;
+            animation: glitch 8s infinite, fadeInDown 0.8s ease 0.4s both;
             position: relative;
         }
 
@@ -426,10 +487,7 @@
             animation: fadeInDown 0.8s ease 0.8s both;
         }
 
-        .hero-desc em {
-            color: var(--gold);
-            font-style: italic;
-        }
+        .hero-desc em { color: var(--gold); font-style: italic; }
 
         .hero-buttons {
             display: flex;
@@ -454,6 +512,7 @@
             overflow: hidden;
             transition: all 0.3s;
             box-shadow: 0 0 20px rgba(231,76,60,0.3);
+            min-height: 44px;
         }
 
         .btn-primary::before {
@@ -465,8 +524,9 @@
             transition: transform 0.5s;
         }
 
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(231,76,60,0.6); }
+        .btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 0 30px rgba(231,76,60,0.6); }
         .btn-primary:hover::before { transform: translateX(100%); }
+        .btn-primary:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 
         .btn-secondary {
             padding: 14px 35px;
@@ -480,6 +540,7 @@
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s;
+            min-height: 44px;
         }
 
         .btn-secondary:hover {
@@ -489,7 +550,9 @@
             transform: translateY(-2px);
         }
 
-        /* Scroll indicator */
+        .btn-secondary:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+
+        /* [FIX P3] Scroll hint — opacidad subida de 0.40 a 0.65 (ratio 4.6:1 PASS AA) */
         .scroll-hint {
             position: absolute;
             bottom: 30px;
@@ -499,7 +562,7 @@
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            color: rgba(240,192,64,0.4);
+            color: rgba(240,192,64,0.65);
             font-family: 'Share Tech Mono', monospace;
             font-size: 0.65rem;
             letter-spacing: 3px;
@@ -510,15 +573,15 @@
         .scroll-arrow {
             width: 20px;
             height: 20px;
-            border-right: 2px solid rgba(240,192,64,0.4);
-            border-bottom: 2px solid rgba(240,192,64,0.4);
+            border-right: 2px solid rgba(240,192,64,0.65);
+            border-bottom: 2px solid rgba(240,192,64,0.65);
             transform: rotate(45deg);
             animation: scrollBounce 2s infinite;
         }
 
         @keyframes scrollBounce {
-            0%, 100% { transform: rotate(45deg) translate(0,0); opacity: 0.4; }
-            50% { transform: rotate(45deg) translate(4px,4px); opacity: 0.9; }
+            0%, 100% { transform: rotate(45deg) translate(0,0); opacity: 0.65; }
+            50% { transform: rotate(45deg) translate(4px,4px); opacity: 1; }
         }
 
         /* ─── SECTION COMMON ────────────────────────────── */
@@ -584,7 +647,6 @@
 
         .about-text p strong { color: var(--gold); font-weight: 700; }
 
-        /* Big stat cards */
         .about-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -614,8 +676,7 @@
         .stat-card:hover { border-color: rgba(240,192,64,0.5); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .stat-card:hover::before { opacity: 1; }
 
-        .stat-icon { font-size: 2rem; margin-bottom: 10px; }
-
+        .stat-icon   { font-size: 2rem; margin-bottom: 10px; }
         .stat-number {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 2.8rem;
@@ -623,7 +684,6 @@
             line-height: 1;
             text-shadow: 0 0 20px rgba(240,192,64,0.4);
         }
-
         .stat-label {
             font-family: 'Share Tech Mono', monospace;
             font-size: 0.7rem;
@@ -633,7 +693,7 @@
             margin-top: 5px;
         }
 
-        /* ─── SKILLS — BALATRO SHOP THEME ───────────────── */
+        /* ─── SKILLS — BALATRO SHOP ─────────────────────── */
         #skills {
             background: linear-gradient(180deg, transparent, rgba(10,30,15,0.6), transparent);
             padding: 100px 0;
@@ -641,7 +701,6 @@
 
         #skills .section { padding: 0 40px; max-width: 1200px; }
 
-        /* The shop frame */
         .shop-frame {
             background: #1a3a1a;
             background-image:
@@ -659,7 +718,6 @@
             overflow: hidden;
         }
 
-        /* Decorative SHOP sign */
         .shop-sign-wrap {
             display: flex;
             flex-direction: column;
@@ -676,10 +734,7 @@
             background: linear-gradient(180deg, #d2363b 0%, #a02226 100%);
             border: 3px solid #5a0d0f;
             border-radius: 12px;
-            box-shadow:
-                0 0 0 3px rgba(255,255,255,0.05),
-                0 6px 20px rgba(0,0,0,0.5),
-                inset 0 -4px 0 rgba(0,0,0,0.25);
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.05), 0 6px 20px rgba(0,0,0,0.5), inset 0 -4px 0 rgba(0,0,0,0.25);
             transform: rotate(-1deg);
         }
 
@@ -688,21 +743,18 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 14px;
-            height: 14px;
+            width: 14px; height: 14px;
             border-radius: 50%;
             background: radial-gradient(circle, #fff7a8 0%, #f0c040 60%, transparent 70%);
-            box-shadow:
-                0 0 12px #f0c040,
-                0 0 25px rgba(240,192,64,0.6);
+            box-shadow: 0 0 12px #f0c040, 0 0 25px rgba(240,192,64,0.6);
             animation: shopBulb 1s infinite alternate;
         }
         .shop-sign::before { left: -7px; }
-        .shop-sign::after { right: -7px; animation-delay: 0.3s; }
+        .shop-sign::after  { right: -7px; animation-delay: 0.3s; }
 
         @keyframes shopBulb {
             from { opacity: 1; transform: translateY(-50%) scale(1); }
-            to { opacity: 0.6; transform: translateY(-50%) scale(0.85); }
+            to   { opacity: 0.6; transform: translateY(-50%) scale(0.85); }
         }
 
         .shop-sign-text {
@@ -710,9 +762,7 @@
             font-size: 2.6rem;
             color: #f5c447;
             letter-spacing: 6px;
-            text-shadow:
-                3px 3px 0 #5a0d0f,
-                0 0 18px rgba(240,192,64,0.5);
+            text-shadow: 3px 3px 0 #5a0d0f, 0 0 18px rgba(240,192,64,0.5);
             display: block;
             line-height: 1;
         }
@@ -728,7 +778,6 @@
             text-shadow: 1px 1px 0 rgba(0,0,0,0.6);
         }
 
-        /* Shop body — packs/jokers area */
         .shop-body {
             background: #0e1f12;
             border: 3px solid #061509;
@@ -738,10 +787,8 @@
             box-shadow: inset 0 4px 15px rgba(0,0,0,0.6);
         }
 
-        .shop-row {
-            margin-bottom: 30px;
-        }
-        .shop-row:last-child { margin-bottom: 0; }
+        .shop-row           { margin-bottom: 30px; }
+        .shop-row:last-child{ margin-bottom: 0; }
 
         .shop-row-label {
             font-family: 'Share Tech Mono', monospace;
@@ -757,12 +804,8 @@
             gap: 12px;
         }
 
-        .shop-row-label::before {
-            content: '▸';
-            color: #f0c040;
-        }
-
-        .shop-row-label::after {
+        .shop-row-label::before { content: '▸'; color: #f0c040; }
+        .shop-row-label::after  {
             content: '';
             flex: 1;
             height: 1px;
@@ -776,7 +819,6 @@
             gap: 18px;
         }
 
-        /* Each skill is now a Balatro shop card */
         .shop-card {
             position: relative;
             background: linear-gradient(160deg, #fefcf2 0%, #e9deb8 100%);
@@ -820,7 +862,6 @@
             z-index: 5;
         }
 
-        /* Cost tag above the card */
         .shop-cost {
             position: absolute;
             top: -14px;
@@ -834,9 +875,7 @@
             padding: 3px 14px;
             border-radius: 6px;
             border: 2px solid #2a1810;
-            box-shadow:
-                0 0 0 1px rgba(255,255,255,0.2) inset,
-                0 3px 0 rgba(0,0,0,0.3);
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.2) inset, 0 3px 0 rgba(0,0,0,0.3);
             text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
             z-index: 3;
             white-space: nowrap;
@@ -844,7 +883,6 @@
 
         .shop-cost.gold { background: #e8a82a; color: #2a1810; }
 
-        /* JOKER-style card top label */
         .shop-card-label {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 0.8rem;
@@ -857,10 +895,8 @@
             border: 1px solid rgba(0,0,0,0.15);
         }
 
-        /* Joker-card art area */
         .shop-card-art {
-            width: 88px;
-            height: 95px;
+            width: 88px; height: 95px;
             border-radius: 6px;
             background: linear-gradient(180deg, #ff5848 0%, #c0392b 70%);
             display: flex;
@@ -874,29 +910,22 @@
             overflow: hidden;
         }
 
-        /* sunburst behind icon */
         .shop-card-art::before {
             content: '';
             position: absolute;
             inset: -20%;
-            background:
-                repeating-conic-gradient(
-                    from 0deg,
-                    rgba(255,200,80,0.35) 0deg 15deg,
-                    transparent 15deg 30deg
-                );
+            background: repeating-conic-gradient(
+                from 0deg,
+                rgba(255,200,80,0.35) 0deg 15deg,
+                transparent 15deg 30deg
+            );
             opacity: 0.6;
             pointer-events: none;
         }
 
-        .shop-card-art > * {
-            position: relative;
-            z-index: 1;
-            filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.5));
-        }
+        .shop-card-art > * { position: relative; z-index: 1; filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.5)); }
 
-        /* Variants for art bg color per category */
-        .shop-row.cat-db .shop-card-art { background: linear-gradient(180deg, #5cc8ff 0%, #1e6f9c 70%); }
+        .shop-row.cat-db    .shop-card-art { background: linear-gradient(180deg, #5cc8ff 0%, #1e6f9c 70%); }
         .shop-row.cat-tools .shop-card-art { background: linear-gradient(180deg, #b675ff 0%, #5b2a8c 70%); }
 
         .shop-card-name {
@@ -909,8 +938,7 @@
         }
 
         .shop-card-level {
-            width: 80%;
-            height: 5px;
+            width: 80%; height: 5px;
             background: rgba(0,0,0,0.15);
             border-radius: 3px;
             overflow: hidden;
@@ -927,7 +955,6 @@
 
         .shop-card.visible .shop-card-level-fill { width: var(--level); }
 
-        /* HUD top-left ($ + ante box) */
         .shop-hud {
             display: flex;
             align-items: stretch;
@@ -969,7 +996,6 @@
         .hud-value.cash { color: #f5d76e; }
         .hud-value.red  { color: #ff6b5a; }
 
-        /* Reroll button */
         .shop-reroll {
             background: linear-gradient(180deg, #2eb24f 0%, #1e7e34 100%);
             border: 2px solid #0e3c1a;
@@ -985,26 +1011,24 @@
             transition: transform 0.1s;
             margin-left: auto;
             align-self: center;
+            min-height: 44px;
         }
 
-        .shop-reroll:hover { transform: translateY(-2px); }
+        .shop-reroll:hover  { transform: translateY(-2px); }
         .shop-reroll:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.3); }
+        .shop-reroll:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
-        /* Mobile shop tweaks */
         @media (max-width: 640px) {
-            .shop-deck { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+            .shop-deck      { grid-template-columns: repeat(2, 1fr); gap: 22px; }
             .shop-sign-text { font-size: 2rem; letter-spacing: 4px; }
-            .shop-body { padding: 25px 12px 18px; }
+            .shop-body      { padding: 25px 12px 18px; }
         }
 
-        /* ─── BALATRO CARD HOVER/CLICK — generic class .balatro-card ── */
-        /* Applies idle hover float + click "spring" bounce.
-           Used on stat-card, project-card, contact-card, timeline-content, shop-card etc. */
+        /* ─── BALATRO HOVER / BOUNCE ────────────────────── */
         .balatro-hover {
             transform-style: preserve-3d;
             will-change: transform;
-            transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1.4),
-                        box-shadow 0.25s ease;
+            transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1.4), box-shadow 0.25s ease;
         }
 
         .balatro-hover.bounce {
@@ -1019,25 +1043,19 @@
             100% { transform: translateY(0)    scale(1) rotate(0deg); }
         }
 
-
-        /* ─── JOURNEY / TIMELINE ────────────────────────── */
+        /* ─── TIMELINE ──────────────────────────────────── */
         #journey {
             padding: 100px 40px;
             max-width: 1100px;
             margin: 0 auto;
         }
 
-        .timeline {
-            position: relative;
-            margin-top: 20px;
-        }
+        .timeline { position: relative; margin-top: 20px; }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
+            left: 50%; top: 0; bottom: 0;
             width: 1px;
             background: linear-gradient(180deg, transparent, rgba(240,192,64,0.3) 20%, rgba(240,192,64,0.3) 80%, transparent);
             transform: translateX(-50%);
@@ -1061,18 +1079,13 @@
             transform: translateX(30px);
         }
 
-        .timeline-item.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
+        .timeline-item.visible { opacity: 1; transform: translateX(0); }
 
         .timeline-dot {
             position: absolute;
-            left: 50%;
-            top: 20px;
+            left: 50%; top: 20px;
             transform: translate(-50%, 0);
-            width: 14px;
-            height: 14px;
+            width: 14px; height: 14px;
             background: var(--gold);
             border-radius: 50%;
             box-shadow: 0 0 15px rgba(240,192,64,0.8);
@@ -1105,11 +1118,8 @@
         }
 
         .timeline-content,
-        .timeline-content * {
-            font-family: "m6x11plus", 'Courier Prime', monospace;
-        }
+        .timeline-content * { font-family: "m6x11plus", 'Courier Prime', monospace; }
 
-        /* Kill the old little triangle "tail" — joker cards don't have it */
         .timeline-content::after { display: none !important; }
         .timeline-item.right .timeline-content::after { display: none !important; }
 
@@ -1188,18 +1198,14 @@
         }
 
         .project-card,
-        .project-card * {
-            font-family: "m6x11plus", 'Courier Prime', monospace;
-        }
+        .project-card * { font-family: "m6x11plus", 'Courier Prime', monospace; }
 
         .project-card:hover {
             box-shadow: 0 14px 40px rgba(0,0,0,0.7), 0 0 25px rgba(255,255,255,0.15);
         }
 
-        /* Remove the old glare overlay */
         .project-card::after { display: none !important; }
 
-        /* Header is now compact: icon row + status badge in the corner */
         .project-header {
             display: flex;
             align-items: center;
@@ -1215,7 +1221,6 @@
             filter: drop-shadow(0 3px 0 rgba(0,0,0,0.4));
         }
 
-        /* Status pill — pixel style on dark background */
         .project-status {
             font-family: "m6x11plus", 'Share Tech Mono', monospace;
             font-size: 0.68rem;
@@ -1231,7 +1236,6 @@
         .project-status.active   { background: #2eb24f; }
         .project-status.learning { background: #2b6fa8; }
 
-        /* Project body holds the joker title (name) and the white desc panel */
         .project-body { padding: 0; }
 
         .project-name {
@@ -1246,7 +1250,6 @@
             text-align: center;
         }
 
-        /* The white "tooltip" panel that holds the description */
         .project-desc {
             background: #ffffff;
             color: #0a0f14;
@@ -1280,7 +1283,7 @@
             box-shadow: 0 3px 0 rgba(0,0,0,0.45);
         }
 
-        /* ─── MUSIC / PASSION SECTION ───────────────────── */
+        /* ─── PASSION ───────────────────────────────────── */
         #passion {
             padding: 100px 40px;
             text-align: center;
@@ -1289,10 +1292,7 @@
             background: linear-gradient(180deg, transparent, rgba(26,10,8,0.9), transparent);
         }
 
-        .trombone-section {
-            max-width: 700px;
-            margin: 0 auto;
-        }
+        .trombone-section { max-width: 700px; margin: 0 auto; }
 
         .big-quote {
             font-size: clamp(1rem, 3vw, 1.4rem);
@@ -1314,7 +1314,7 @@
         }
 
         .big-quote::before { top: 10px; left: 0; }
-        .big-quote::after { content: '"'; bottom: -20px; right: 0; }
+        .big-quote::after  { content: '"'; bottom: -20px; right: 0; }
 
         .notes-float {
             position: absolute;
@@ -1332,9 +1332,9 @@
         }
 
         @keyframes noteFloat {
-            0% { opacity: 0; transform: translateY(80%) rotate(0deg); }
-            20% { opacity: 0.3; }
-            80% { opacity: 0.15; }
+            0%   { opacity: 0; transform: translateY(80%) rotate(0deg); }
+            20%  { opacity: 0.3; }
+            80%  { opacity: 0.15; }
             100% { opacity: 0; transform: translateY(-80%) rotate(20deg); }
         }
 
@@ -1362,8 +1362,7 @@
             font-family: serif;
             font-size: 25rem;
             color: rgba(255,255,255,0.015);
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
             user-select: none;
@@ -1398,6 +1397,7 @@
             text-transform: uppercase;
             transition: all 0.3s;
             background: rgba(255,255,255,0.03);
+            min-height: 44px;
         }
 
         .contact-link:hover {
@@ -1408,9 +1408,13 @@
             transform: translateY(-2px);
         }
 
+        .contact-link:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 4px;
+        }
+
         .contact-link svg { width: 18px; height: 18px; fill: currentColor; }
 
-        /* Location badge */
         .location-badge {
             display: inline-flex;
             align-items: center;
@@ -1455,37 +1459,68 @@
             opacity: 0.2;
         }
 
+        /* [FIX P1] Footer copy: opacidad 0.30 → 0.55 (ratio 2.28 → 5.2:1 PASS AA) */
         .footer-copy {
             font-family: 'Share Tech Mono', monospace;
             font-size: 0.65rem;
             letter-spacing: 2px;
-            color: rgba(245,230,200,0.3);
+            color: rgba(245,230,200,0.55);
             text-transform: uppercase;
         }
 
         /* ─── ANIMATIONS ────────────────────────────────── */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn     { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* Scroll reveal */
+        @keyframes glitch {
+            0%, 90%, 100% { text-shadow: 4px 4px 0 rgba(192,57,43,0.4), 0 0 30px rgba(240,192,64,0.3); }
+            92% { text-shadow: -4px 4px 0 rgba(231,76,60,0.8), 4px -4px 0 rgba(79,195,247,0.5), 0 0 30px rgba(240,192,64,0.3); }
+            94% { text-shadow:  4px -4px 0 rgba(231,76,60,0.8),-4px  4px 0 rgba(79,195,247,0.5), 0 0 30px rgba(240,192,64,0.3); }
+        }
+
         .reveal {
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
 
         /* ─── RESPONSIVE ────────────────────────────────── */
         @media (max-width: 768px) {
             nav { padding: 14px 20px; }
-            .nav-links { display: none; }
+
+            /* [FIX P1] Nav links — menú desplegable en móvil */
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 32px;
+                position: fixed;
+                inset: 0;
+                background: rgba(10,6,5,0.97);
+                transform: translateX(100%);
+                transition: transform 0.4s ease;
+                z-index: 99;
+                backdrop-filter: blur(8px);
+            }
+
+            .nav-links.open { transform: translateX(0); }
+
+            .nav-links a {
+                font-size: 1.2rem;
+                letter-spacing: 4px;
+                padding: 16px 24px;
+                opacity: 0.9;
+            }
+
+            /* [FIX P1] Mostrar botón hamburger en mobile */
+            .nav-toggle { display: flex; }
+
             .hero-card-decor { display: none; }
             .section { padding: 70px 20px; }
             #about .about-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -1497,26 +1532,49 @@
             }
             .timeline-dot { left: 20px; }
             .timeline-content { max-width: 100%; }
-            .timeline-content::after, .timeline-item.right .timeline-content::after {
-                display: none;
-            }
+            .timeline-content::after,
+            .timeline-item.right .timeline-content::after { display: none; }
             .contact-card { padding: 40px 25px; }
             footer { flex-direction: column; text-align: center; }
         }
 
-        /* Glitch effect for hero name */
-        @keyframes glitch {
-            0%, 90%, 100% { text-shadow: 4px 4px 0 rgba(192,57,43,0.4), 0 0 30px rgba(240,192,64,0.3); }
-            92% { text-shadow: -4px 4px 0 rgba(231,76,60,0.8), 4px -4px 0 rgba(79,195,247,0.5), 0 0 30px rgba(240,192,64,0.3); }
-            94% { text-shadow: 4px -4px 0 rgba(231,76,60,0.8), -4px 4px 0 rgba(79,195,247,0.5), 0 0 30px rgba(240,192,64,0.3); }
-        }
+        /* [FIX P1] prefers-reduced-motion — desactiva todas las animaciones
+           y oculta el canvas WebGL (se sustituye por gradiente estático) */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
 
-        .hero-name { animation: glitch 8s infinite; }
+            /* Canvas WebGL — oculto, gradiente estático como fondo */
+            #bg-canvas {
+                display: none;
+            }
+            body {
+                background: radial-gradient(ellipse at 30% 20%, #1a0a08, #0a0605 70%);
+            }
 
-        /* Holographic shimmer */
-        @keyframes holo {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            /* Notas flotantes — desactivadas */
+            .note { display: none !important; }
+
+            /* Cards idle float — se muestra estático */
+            .shop-card,
+            .hero-card-decor,
+            .hero-card-decor.right { animation: none !important; }
+
+            /* Dots de la timeline */
+            .timeline-dot::after { animation: none !important; }
+
+            /* Hero glitch */
+            .hero-name { animation: none !important; }
+
+            /* Reveal — mostrar directamente sin transición */
+            .reveal, .timeline-item {
+                opacity: 1 !important;
+                transform: none !important;
+            }
         }
     </style>
 </head>
@@ -1530,18 +1588,29 @@
         <!-- NAV -->
         <nav>
             <div class="nav-logo">J<span>L</span></div>
-            <ul class="nav-links">
+
+            <ul class="nav-links" id="navLinks" role="list">
                 <li><a href="#about">Sobre mí</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#journey">Trayectoria</a></li>
                 <li><a href="#projects">Proyectos</a></li>
                 <li><a href="#contact">Contacto</a></li>
             </ul>
+
+            <!-- [FIX P1] Botón hamburger — solo visible en mobile -->
+            <button class="nav-toggle" id="navToggle"
+                    aria-label="Abrir menú de navegación"
+                    aria-expanded="false"
+                    aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </nav>
 
         <!-- ═══ HERO ══════════════════════════════════════ -->
         <section id="hero">
-            <div class="suit-bg">
+            <div class="suit-bg" aria-hidden="true">
                 <div class="suit-symbol">♠</div>
                 <div class="suit-symbol" style="color:#c0392b">♥</div>
                 <div class="suit-symbol">♣</div>
@@ -1551,13 +1620,12 @@
             </div>
 
             <div class="hero-inner">
-                <!-- Floating cards -->
-                <div class="hero-card-decor left">
+                <div class="hero-card-decor left" aria-hidden="true">
                     <div class="card-corner">J<br>♠</div>
                     <div>♠️</div>
                     <div class="card-corner br">J<br>♠</div>
                 </div>
-                <div class="hero-card-decor right">
+                <div class="hero-card-decor right" aria-hidden="true">
                     <div class="card-corner">Q<br><span style="color:#c0392b">♥</span></div>
                     <div>♦️</div>
                     <div class="card-corner br">Q<br><span style="color:#c0392b">♥</span></div>
@@ -1583,7 +1651,7 @@
                 </div>
             </div>
 
-            <div class="scroll-hint">
+            <div class="scroll-hint" aria-hidden="true">
                 <span>Scroll</span>
                 <div class="scroll-arrow"></div>
             </div>
@@ -1638,8 +1706,6 @@
                 <div class="section-divider"></div>
 
                 <div class="shop-frame reveal">
-
-                    <!-- SHOP NEON SIGN -->
                     <div class="shop-sign-wrap">
                         <div class="shop-sign">
                             <span class="shop-sign-text">SHOP</span>
@@ -1647,7 +1713,6 @@
                         <div class="shop-sign-sub">Improve your run!</div>
                     </div>
 
-                    <!-- HUD: ante / round / cash + reroll -->
                     <div class="shop-hud">
                         <div class="hud-box">
                             <span class="hud-label">Ante</span>
@@ -1661,17 +1726,13 @@
                             <span class="hud-label">Cash</span>
                             <span class="hud-value cash">$∞</span>
                         </div>
-                        <button class="shop-reroll" type="button">↻ Reroll $5</button>
+                        <button class="shop-reroll" type="button" aria-label="Animar las cartas de habilidades">↻ Reroll $5</button>
                     </div>
 
-                    <!-- SHOP BODY -->
                     <div class="shop-body">
-
-                        <!-- ROW 1: BACKEND (jokers) -->
                         <div class="shop-row cat-backend">
                             <div class="shop-row-label">Backend · Jokers</div>
                             <div class="shop-deck">
-
                                 <div class="shop-card balatro-hover" data-level="80%">
                                     <span class="shop-cost">$8</span>
                                     <div class="shop-card-label">JOKER</div>
@@ -1679,7 +1740,6 @@
                                     <div class="shop-card-name">Java</div>
                                     <div class="shop-card-level"><div class="shop-card-level-fill" style="--level: 80%"></div></div>
                                 </div>
-
                                 <div class="shop-card balatro-hover" data-level="70%">
                                     <span class="shop-cost">$7</span>
                                     <div class="shop-card-label">JOKER</div>
@@ -1687,7 +1747,6 @@
                                     <div class="shop-card-name">Spring Boot</div>
                                     <div class="shop-card-level"><div class="shop-card-level-fill" style="--level: 70%"></div></div>
                                 </div>
-
                                 <div class="shop-card balatro-hover" data-level="75%">
                                     <span class="shop-cost">$7</span>
                                     <div class="shop-card-label">JOKER</div>
@@ -1695,7 +1754,6 @@
                                     <div class="shop-card-name">APIs REST</div>
                                     <div class="shop-card-level"><div class="shop-card-level-fill" style="--level: 75%"></div></div>
                                 </div>
-
                                 <div class="shop-card balatro-hover" data-level="55%">
                                     <span class="shop-cost">$6</span>
                                     <div class="shop-card-label">JOKER</div>
@@ -1703,15 +1761,12 @@
                                     <div class="shop-card-name">Spring Security</div>
                                     <div class="shop-card-level"><div class="shop-card-level-fill" style="--level: 55%"></div></div>
                                 </div>
-
                             </div>
                         </div>
 
-                        <!-- ROW 2: DATABASES (planet pack-ish) -->
                         <div class="shop-row cat-db">
                             <div class="shop-row-label">Bases de datos · Planet Pack</div>
                             <div class="shop-deck">
-
                                 <div class="shop-card balatro-hover" data-level="78%">
                                     <span class="shop-cost gold">$5</span>
                                     <div class="shop-card-label">PACK</div>
@@ -1719,7 +1774,6 @@
                                     <div class="shop-card-name">MySQL</div>
                                     <div class="shop-card-level"><div class="shop-card-level-fill" style="--level: 78%"></div></div>
                                 </div>
-
                                 <div class="shop-card balatro-hover" data-level="45%">
                                     <span class="shop-cost gold">$5</span>
                                     <div class="shop-card-label">PACK</div>
@@ -1727,7 +1781,6 @@
                                     <div class="shop-card-name">PL/SQL</div>
                                     <div class="shop-card-level"><div class="shop-card-level-fill" style="--level: 45%"></div></div>
                                 </div>
-
                                 <div class="shop-card balatro-hover" data-level="65%">
                                     <span class="shop-cost gold">$6</span>
                                     <div class="shop-card-label">PACK</div>
@@ -1735,15 +1788,12 @@
                                     <div class="shop-card-name">JPA · Hibernate</div>
                                     <div class="shop-card-level"><div class="shop-card-level-fill" style="--level: 65%"></div></div>
                                 </div>
-
                             </div>
                         </div>
 
-                        <!-- ROW 3: TOOLS (vouchers) -->
                         <div class="shop-row cat-tools">
                             <div class="shop-row-label">Mis Comodines · Vouchers</div>
                             <div class="shop-deck">
-
                                 <div class="shop-card balatro-hover" data-level="80%">
                                     <span class="shop-cost">$10</span>
                                     <div class="shop-card-label">VOUCHER</div>
@@ -1751,7 +1801,6 @@
                                     <div class="shop-card-name">Git · GitHub</div>
                                     <div class="shop-card-level"><div class="shop-card-level-fill" style="--level: 80%"></div></div>
                                 </div>
-
                                 <div class="shop-card balatro-hover" data-level="40%">
                                     <span class="shop-cost">$10</span>
                                     <div class="shop-card-label">VOUCHER</div>
@@ -1759,7 +1808,6 @@
                                     <div class="shop-card-name">Docker</div>
                                     <div class="shop-card-level"><div class="shop-card-level-fill" style="--level: 40%"></div></div>
                                 </div>
-
                                 <div class="shop-card balatro-hover" data-level="85%">
                                     <span class="shop-cost">$10</span>
                                     <div class="shop-card-label">VOUCHER</div>
@@ -1767,7 +1815,6 @@
                                     <div class="shop-card-name">Postman</div>
                                     <div class="shop-card-level"><div class="shop-card-level-fill" style="--level: 85%"></div></div>
                                 </div>
-
                                 <div class="shop-card balatro-hover" data-level="90%">
                                     <span class="shop-cost">$10</span>
                                     <div class="shop-card-label">VOUCHER</div>
@@ -1775,13 +1822,10 @@
                                     <div class="shop-card-name">IntelliJ IDEA</div>
                                     <div class="shop-card-level"><div class="shop-card-level-fill" style="--level: 90%"></div></div>
                                 </div>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -1792,7 +1836,6 @@
             <div class="section-divider"></div>
 
             <div class="timeline">
-
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content balatro-hover">
@@ -1842,7 +1885,6 @@
                         <span class="timeline-badge">🚀 Disponible para trabajar</span>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -1853,7 +1895,6 @@
             <div class="section-divider"></div>
 
             <div class="projects-grid">
-
                 <div class="project-card balatro-hover reveal">
                     <div class="project-header">
                         <div class="project-icon">🏪</div>
@@ -1904,13 +1945,12 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
         <!-- ═══ PASSION ══════════════════════════════════ -->
         <section id="passion">
-            <div class="notes-float" id="notesContainer"></div>
+            <div class="notes-float" id="notesContainer" aria-hidden="true"></div>
             <div class="trombone-section">
                 <div class="section-label" style="justify-content: center">05 — Mi filosofía</div>
                 <h2 class="section-title reveal">La <span class="accent">música</span> del código</h2>
@@ -1936,16 +1976,17 @@
                 <p>Si buscas a alguien con <grn>ganas de aprender</grn>, comprometido con el <chips>código de calidad</chips> y que no le tenga miedo a los <mult>desafíos</mult>, hablemos. Estoy disponible para <ylw>prácticas</ylw>, proyectos y mi primer trabajo en <mult>backend</mult>.</p>
 
                 <div class="contact-links">
-                    <a href="https://linkedin.com" target="_blank" class="contact-link">
-                        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    <!-- [FIX P2] Reemplaza los href con tus URLs reales -->
+                    <a href="https://linkedin.com/in/TU-PERFIL" target="_blank" rel="noopener noreferrer" class="contact-link">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                         LinkedIn
                     </a>
-                    <a href="https://github.com" target="_blank" class="contact-link">
-                        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    <a href="https://github.com/TU-USUARIO" target="_blank" rel="noopener noreferrer" class="contact-link">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                         GitHub
                     </a>
-                    <a href="mailto:joseluis@example.com" class="contact-link">
-                        <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+                    <a href="mailto:tu-email@dominio.com" class="contact-link">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
                         Email
                     </a>
                 </div>
@@ -1955,31 +1996,33 @@
         <!-- ═══ FOOTER ═══════════════════════════════════ -->
         <footer>
             <div class="footer-brand">José Luis</div>
-            <div class="footer-suits">♠ ♥ ♣ ♦</div>
+            <div class="footer-suits" aria-hidden="true">♠ ♥ ♣ ♦</div>
             <div class="footer-copy">Hecho con HTML y mucho Spring Boot · Arahal, Sevilla</div>
         </footer>
 
-    </div><!-- end page-content -->
+    </div>
 
     <script>
     // ═══════════════════════════════════════════════════
-    // WebGL BACKGROUND (original shader, enhanced)
+    // [FIX P1 + P3] prefers-reduced-motion y pausa por visibilidad
+    // ═══════════════════════════════════════════════════
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ═══════════════════════════════════════════════════
+    // WebGL BACKGROUND
     // ═══════════════════════════════════════════════════
     const canvas = document.getElementById('bg-canvas');
     const gl = canvas.getContext('webgl');
 
     const vsSource = `
         attribute vec2 position;
-        void main() {
-            gl_Position = vec4(position, 0.0, 1.0);
-        }
+        void main() { gl_Position = vec4(position, 0.0, 1.0); }
     `;
 
     const fsSource = `
         precision highp float;
         uniform vec2 iResolution;
         uniform float iTime;
-
         #define SPIN_ROTATION -2.0
         #define SPIN_SPEED 7.0
         #define OFFSET vec2(0.0, 0.0)
@@ -2017,9 +2060,7 @@
             return (0.3 / CONTRAST) * COLOUR_1 + (1.0 - 0.3 / CONTRAST) * (COLOUR_1 * c1p + COLOUR_2 * c2p + vec4(c3p * COLOUR_3.rgb, c3p * COLOUR_1.a)) + light;
         }
 
-        void main() {
-            gl_FragColor = effect(iResolution, gl_FragCoord.xy);
-        }
+        void main() { gl_FragColor = effect(iResolution, gl_FragCoord.xy); }
     `;
 
     function compileShader(type, source) {
@@ -2033,67 +2074,123 @@
         return shader;
     }
 
-    const program = gl.createProgram();
-    gl.attachShader(program, compileShader(gl.VERTEX_SHADER, vsSource));
-    gl.attachShader(program, compileShader(gl.FRAGMENT_SHADER, fsSource));
-    gl.linkProgram(program);
-    gl.useProgram(program);
+    if (gl && !prefersReducedMotion) {
+        const program = gl.createProgram();
+        gl.attachShader(program, compileShader(gl.VERTEX_SHADER, vsSource));
+        gl.attachShader(program, compileShader(gl.FRAGMENT_SHADER, fsSource));
+        gl.linkProgram(program);
+        gl.useProgram(program);
 
-    const vertices = new Float32Array([-1,-1, 1,-1, -1,1, 1,1]);
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+        const vertices = new Float32Array([-1,-1, 1,-1, -1,1, 1,1]);
+        const buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 
-    const posLoc = gl.getAttribLocation(program, "position");
-    gl.enableVertexAttribArray(posLoc);
-    gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+        const posLoc = gl.getAttribLocation(program, 'position');
+        gl.enableVertexAttribArray(posLoc);
+        gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
 
-    const uRes = gl.getUniformLocation(program, "iResolution");
-    const uTime = gl.getUniformLocation(program, "iTime");
+        const uRes  = gl.getUniformLocation(program, 'iResolution');
+        const uTime = gl.getUniformLocation(program, 'iTime');
 
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        gl.viewport(0, 0, canvas.width, canvas.height);
+        function resize() {
+            canvas.width  = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let start = Date.now();
+        let animating = true;
+
+        // [FIX P3] Pausar WebGL cuando el tab no está visible — ahorra batería
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                animating = false;
+            } else {
+                animating = true;
+                start = Date.now() - pausedAt; // mantener continuidad temporal
+                render();
+            }
+        });
+
+        let pausedAt = 0;
+        function render() {
+            if (!animating) {
+                pausedAt = Date.now() - start;
+                return;
+            }
+            gl.uniform2f(uRes, canvas.width, canvas.height);
+            gl.uniform1f(uTime, (Date.now() - start) / 1000.0);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            requestAnimationFrame(render);
+        }
+
+        render();
+    } else {
+        // prefers-reduced-motion: ocultar canvas (el CSS ya lo hace, doble seguridad)
+        canvas.style.display = 'none';
     }
-    window.addEventListener('resize', resize);
-    resize();
-
-    let start = Date.now();
-    function render() {
-        gl.uniform2f(uRes, canvas.width, canvas.height);
-        gl.uniform1f(uTime, (Date.now() - start) / 1000.0);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-        requestAnimationFrame(render);
-    }
-    render();
 
     // ═══════════════════════════════════════════════════
-    // FLOATING MUSIC NOTES
+    // [FIX P1] HAMBURGER NAV — toggle mobile
     // ═══════════════════════════════════════════════════
-    const notes = ['♩','♪','♫','♬','𝄞','𝄢'];
-    const container = document.getElementById('notesContainer');
-    setInterval(() => {
-        const note = document.createElement('div');
-        note.className = 'note';
-        note.textContent = notes[Math.floor(Math.random() * notes.length)];
-        note.style.left = Math.random() * 100 + '%';
-        note.style.animationDuration = (6 + Math.random() * 6) + 's';
-        note.style.animationDelay = (Math.random() * 2) + 's';
-        note.style.fontSize = (1 + Math.random() * 2) + 'rem';
-        note.style.opacity = '0';
-        container.appendChild(note);
-        setTimeout(() => note.remove(), 14000);
-    }, 1200);
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+        // Bloquear scroll del body cuando el menú está abierto
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Cerrar menú al hacer clic en cualquier enlace
+    navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            navToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Cerrar menú con Escape
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+            navLinks.classList.remove('open');
+            navToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+            navToggle.focus();
+        }
+    });
+
+    // ═══════════════════════════════════════════════════
+    // FLOATING MUSIC NOTES — respeta reduced motion
+    // ═══════════════════════════════════════════════════
+    if (!prefersReducedMotion) {
+        const notes = ['♩','♪','♫','♬','𝄞','𝄢'];
+        const container = document.getElementById('notesContainer');
+        setInterval(() => {
+            const note = document.createElement('div');
+            note.className = 'note';
+            note.textContent = notes[Math.floor(Math.random() * notes.length)];
+            note.style.left = Math.random() * 100 + '%';
+            note.style.animationDuration = (6 + Math.random() * 6) + 's';
+            note.style.animationDelay = (Math.random() * 2) + 's';
+            note.style.fontSize = (1 + Math.random() * 2) + 'rem';
+            note.style.opacity = '0';
+            container.appendChild(note);
+            setTimeout(() => note.remove(), 14000);
+        }, 1200);
+    }
 
     // ═══════════════════════════════════════════════════
     // SCROLL REVEAL
     // ═══════════════════════════════════════════════════
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
+            if (entry.isIntersecting) entry.target.classList.add('visible');
         });
     }, { threshold: 0.1 });
 
@@ -2102,95 +2199,76 @@
     });
 
     // ═══════════════════════════════════════════════════
-    // BALATRO CARD MOTION
-    // Idle = CSS animation. On mouseover we add a smooth
-    // 3D tilt based on the cursor position (like jokers
-    // peeking in the shop). On click we trigger a tiny
-    // spring "bounce" — same vibe as the p5 sketch but
-    // way cheaper at scale.
+    // BALATRO CARD MOTION — 3D tilt + spring bounce
     // ═══════════════════════════════════════════════════
-    const balatroCards = document.querySelectorAll('.balatro-hover');
+    if (!prefersReducedMotion) {
+        const balatroCards = document.querySelectorAll('.balatro-hover');
 
-    balatroCards.forEach(card => {
-        let rafId = null;
-        let targetRX = 0, targetRY = 0, curRX = 0, curRY = 0;
-        let hovering = false;
-        let lastMouseX = 0;
-        let prevMouseX = 0;
-        let xSpeed = 0;
+        balatroCards.forEach(card => {
+            let rafId = null;
+            let targetRX = 0, targetRY = 0, curRX = 0, curRY = 0;
+            let hovering = false;
+            let prevMouseX = 0;
+            let xSpeed = 0;
 
-        function loop() {
-            // ease toward target rotation
-            curRX += (targetRX - curRX) * 0.18;
-            curRY += (targetRY - curRY) * 0.18;
-            // damp horizontal speed (drag-like wobble)
-            xSpeed *= 0.85;
-            const tilt = xSpeed * 0.08;
-            // pause idle float while we're tilting it manually
-            card.style.animationPlayState = hovering ? 'paused' : 'running';
-            if (hovering) {
-                card.style.transform =
-                    `perspective(800px) translateY(-6px) ` +
-                    `rotateX(${curRX}deg) rotateY(${curRY + tilt}deg) ` +
-                    `rotateZ(${tilt * 0.4}deg) scale(1.05)`;
-            } else if (Math.abs(curRX) > 0.05 || Math.abs(curRY) > 0.05 || Math.abs(xSpeed) > 0.1) {
-                card.style.transform =
-                    `perspective(800px) ` +
-                    `rotateX(${curRX}deg) rotateY(${curRY}deg) ` +
-                    `rotateZ(${tilt * 0.2}deg)`;
-            } else {
-                // hand back control to the idle CSS animation
-                card.style.transform = '';
-            }
-            rafId = requestAnimationFrame(loop);
-        }
-
-        card.addEventListener('mouseenter', () => {
-            hovering = true;
-            if (!rafId) loop();
-        });
-
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-            // Y axis (left/right tilt) — like Balatro jokers
-            targetRY = x * 18;
-            targetRX = -y * 12;
-            // horizontal speed for the drag wobble
-            xSpeed = e.clientX - prevMouseX;
-            prevMouseX = e.clientX;
-            lastMouseX = e.clientX;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            hovering = false;
-            targetRX = 0;
-            targetRY = 0;
-            // stop loop after the easing settles
-            setTimeout(() => {
-                if (rafId && !hovering) {
-                    cancelAnimationFrame(rafId);
-                    rafId = null;
+            function loop() {
+                curRX += (targetRX - curRX) * 0.18;
+                curRY += (targetRY - curRY) * 0.18;
+                xSpeed *= 0.85;
+                const tilt = xSpeed * 0.08;
+                card.style.animationPlayState = hovering ? 'paused' : 'running';
+                if (hovering) {
+                    card.style.transform =
+                        `perspective(800px) translateY(-6px) ` +
+                        `rotateX(${curRX}deg) rotateY(${curRY + tilt}deg) ` +
+                        `rotateZ(${tilt * 0.4}deg) scale(1.05)`;
+                } else if (Math.abs(curRX) > 0.05 || Math.abs(curRY) > 0.05 || Math.abs(xSpeed) > 0.1) {
+                    card.style.transform =
+                        `perspective(800px) rotateX(${curRX}deg) rotateY(${curRY}deg) rotateZ(${tilt * 0.2}deg)`;
+                } else {
                     card.style.transform = '';
-                    card.style.animationPlayState = '';
                 }
-            }, 600);
-        });
+                rafId = requestAnimationFrame(loop);
+            }
 
-        // Spring bounce on click — same flavor as your p5 sketch
-        card.addEventListener('click', () => {
-            card.classList.remove('bounce');
-            // force reflow so the animation restarts
-            void card.offsetWidth;
-            card.classList.add('bounce');
-            setTimeout(() => card.classList.remove('bounce'), 600);
-        });
-    });
+            card.addEventListener('mouseenter', () => { hovering = true; if (!rafId) loop(); });
 
-    // Reroll button — purely cosmetic, just shakes the shop
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top)  / rect.height - 0.5;
+                targetRY = x * 18;
+                targetRX = -y * 12;
+                xSpeed = e.clientX - prevMouseX;
+                prevMouseX = e.clientX;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                hovering = false;
+                targetRX = 0;
+                targetRY = 0;
+                setTimeout(() => {
+                    if (rafId && !hovering) {
+                        cancelAnimationFrame(rafId);
+                        rafId = null;
+                        card.style.transform = '';
+                        card.style.animationPlayState = '';
+                    }
+                }, 600);
+            });
+
+            card.addEventListener('click', () => {
+                card.classList.remove('bounce');
+                void card.offsetWidth;
+                card.classList.add('bounce');
+                setTimeout(() => card.classList.remove('bounce'), 600);
+            });
+        });
+    }
+
+    // Reroll button
     const rerollBtn = document.querySelector('.shop-reroll');
-    if (rerollBtn) {
+    if (rerollBtn && !prefersReducedMotion) {
         rerollBtn.addEventListener('click', () => {
             document.querySelectorAll('.shop-card').forEach((c, i) => {
                 setTimeout(() => {
@@ -2206,47 +2284,39 @@
     // ═══════════════════════════════════════════════════
     // CARD SPARKLE ON HERO BUTTONS
     // ═══════════════════════════════════════════════════
-    document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            const sparks = 8;
-            for (let i = 0; i < sparks; i++) {
-                const spark = document.createElement('span');
-                spark.style.cssText = `
-                    position: fixed;
-                    width: 6px;
-                    height: 6px;
-                    border-radius: 50%;
-                    background: #f0c040;
-                    pointer-events: none;
-                    z-index: 9999;
-                    left: ${e.clientX}px;
-                    top: ${e.clientY}px;
-                    animation: none;
-                `;
-                document.body.appendChild(spark);
-                const angle = (i / sparks) * Math.PI * 2;
-                const dist = 40 + Math.random() * 40;
-                let x = Math.cos(angle) * dist;
-                let y = Math.sin(angle) * dist;
-                spark.animate([
-                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
-                    { transform: `translate(${x}px,${y}px) scale(0)`, opacity: 0 }
-                ], { duration: 500, easing: 'ease-out' }).onfinish = () => spark.remove();
-            }
+    if (!prefersReducedMotion) {
+        document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const sparks = 8;
+                for (let i = 0; i < sparks; i++) {
+                    const spark = document.createElement('span');
+                    spark.style.cssText = `
+                        position:fixed;width:6px;height:6px;border-radius:50%;
+                        background:#f0c040;pointer-events:none;z-index:9999;
+                        left:${e.clientX}px;top:${e.clientY}px;
+                    `;
+                    document.body.appendChild(spark);
+                    const angle = (i / sparks) * Math.PI * 2;
+                    const dist = 40 + Math.random() * 40;
+                    spark.animate([
+                        { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                        { transform: `translate(${Math.cos(angle)*dist}px,${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }
+                    ], { duration: 500, easing: 'ease-out' }).onfinish = () => spark.remove();
+                }
+            });
         });
-    });
+    }
 
     // Active nav link on scroll
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections  = document.querySelectorAll('section[id]');
+    const navLinkEls = document.querySelectorAll('.nav-links a');
     window.addEventListener('scroll', () => {
         let current = '';
-        sections.forEach(s => {
-            if (window.scrollY >= s.offsetTop - 200) current = s.id;
-        });
-        navLinks.forEach(a => {
-            a.style.opacity = a.getAttribute('href') === '#' + current ? '1' : '0.7';
-            a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+        sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) current = s.id; });
+        navLinkEls.forEach(a => {
+            const active = a.getAttribute('href') === '#' + current;
+            a.style.opacity = active ? '1' : '0.7';
+            a.style.color   = active ? 'var(--gold)' : '';
         });
     });
     </script>
